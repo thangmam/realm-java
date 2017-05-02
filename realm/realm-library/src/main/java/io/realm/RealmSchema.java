@@ -23,6 +23,7 @@ import java.util.Set;
 
 import io.realm.internal.ColumnIndices;
 import io.realm.internal.ColumnInfo;
+import io.realm.internal.FieldDescriptor;
 import io.realm.internal.Table;
 
 
@@ -104,9 +105,9 @@ public abstract class RealmSchema {
      * @param table the starting Table: where(Table.class)
      * @param fieldDescription fieldName or link path to a field name.
      * @param validColumnTypes valid field type for the last field in a linked field
-     * @return a pair of arrays:  [0] is column indices, [1] is either NativeObject.NULLPTR or a native table pointer.
+     * @return a FieldDescriptor
      */
-    abstract long[][] getColumnIndices(Table table, String fieldDescription, RealmFieldType... validColumnTypes);
+    abstract FieldDescriptor getColumnIndices(Table table, String fieldDescription, RealmFieldType... validColumnTypes);
 
     abstract Table getTable(Class<? extends RealmModel> clazz);
 
@@ -115,24 +116,6 @@ public abstract class RealmSchema {
     abstract RealmObjectSchema getSchemaForClass(Class<? extends RealmModel> clazz);
 
     abstract RealmObjectSchema getSchemaForClass(String className);
-
-    /**
-     * Parse the passed field description into its components.
-     * This must be standard across implementations and is, therefore, implemented in the base class.
-     * TODO: This method should be integrated with the class FieldDescriptor.
-     *
-     * @param fieldDescription a field description.
-     * @return the parse tree: a list of column names
-     */
-    protected final List<String> parseFieldDescription(String fieldDescription) {
-        if (fieldDescription == null || fieldDescription.equals("")) {
-            throw new IllegalArgumentException("Invalid query: field name is empty");
-        }
-        if (fieldDescription.endsWith(".")) {
-            throw new IllegalArgumentException("Invalid query: field name must not end with a period ('.')");
-        }
-        return Arrays.asList(fieldDescription.split("\\."));
-    }
 
     /**
      * Set the column index cache for this schema.

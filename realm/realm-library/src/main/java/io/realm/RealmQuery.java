@@ -22,6 +22,7 @@ import java.util.Date;
 
 import io.realm.annotations.Required;
 import io.realm.internal.Collection;
+import io.realm.internal.FieldDescriptor;
 import io.realm.internal.LinkView;
 import io.realm.internal.PendingRow;
 import io.realm.internal.RealmObjectProxy;
@@ -198,7 +199,7 @@ public class RealmQuery<E extends RealmModel> {
     public RealmQuery<E> isNull(String fieldName) {
         realm.checkIfValid();
 
-        long[][] columnInfo = schema.getColumnIndices(fieldName);
+        FieldDescriptor fd =  schema.getColumnIndices(fieldName);
 
         // Checks that fieldName has the correct type is done in C++.
         this.query.isNull(columnInfo[0], columnInfo[1]);
@@ -216,7 +217,7 @@ public class RealmQuery<E extends RealmModel> {
     public RealmQuery<E> isNotNull(String fieldName) {
         realm.checkIfValid();
 
-        long[][] columnInfo = schema.getColumnIndices(fieldName);
+        FieldDescriptor fd =  schema.getColumnIndices(fieldName);
 
         // Checks that fieldName has the correct type is done in C++.
         this.query.isNotNull(columnInfo[0], columnInfo[1]);

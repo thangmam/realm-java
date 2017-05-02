@@ -80,7 +80,7 @@ public class SortDescriptor {
 
         long[][] columnIndices = new long[fieldDescriptions.length][];
         for (int i = 0; i < fieldDescriptions.length; i++) {
-            FieldDescriptor descriptor = new FieldDescriptor(table, fieldDescriptions[i], true, false);
+            FieldDescriptor descriptor = FieldDescriptor.createLegacyDescriptor(table, fieldDescriptions[i], true, false);
             checkFieldTypeForSort(descriptor, fieldDescriptions[i]);
             columnIndices[i] = descriptor.getColumnIndices();
         }
@@ -99,7 +99,7 @@ public class SortDescriptor {
 
         long[][] columnIndices = new long[fieldDescriptions.length][];
         for (int i = 0; i < fieldDescriptions.length; i++) {
-            FieldDescriptor descriptor = new FieldDescriptor(table, fieldDescriptions[i], false, false);
+            FieldDescriptor descriptor = FieldDescriptor.createLegacyDescriptor(table, fieldDescriptions[i], false, false);
             checkFieldTypeForDistinct(descriptor, fieldDescriptions[i]);
             columnIndices[i] = descriptor.getColumnIndices();
         }

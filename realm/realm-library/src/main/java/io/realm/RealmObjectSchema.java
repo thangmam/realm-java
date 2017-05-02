@@ -19,6 +19,7 @@ package io.realm;
 import java.util.Set;
 
 import io.realm.annotations.Required;
+import io.realm.internal.FieldDescriptor;
 import io.realm.internal.Table;
 
 
@@ -284,9 +285,9 @@ public abstract class RealmObjectSchema {
      *
      * @param fieldDescription fieldName or link path to a field name.
      * @param validColumnTypes valid field type for the last field in a linked field
-     * @return a pair of arrays:  [0] is column indices, [1] is either NativeObject.NULLPTR or a native table pointer.
+     * @return a FieldDescriptor.
      */
-    protected final long[][] getColumnIndices(String fieldDescription, RealmFieldType... validColumnTypes) {
+    protected final FieldDescriptor getColumnIndices(String fieldDescription, RealmFieldType... validColumnTypes) {
         return schema.getColumnIndices(getTable(), fieldDescription, validColumnTypes);
     }
 
